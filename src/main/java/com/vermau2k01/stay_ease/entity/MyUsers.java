@@ -26,4 +26,11 @@ public class MyUsers {
     @Column(nullable = false)
     private String password;
     private String role;
+
+    public String getFullName()
+    {
+        return name;
+    }
+
+
 }
