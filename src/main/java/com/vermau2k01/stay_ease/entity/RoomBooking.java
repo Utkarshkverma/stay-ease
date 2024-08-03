@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 @Getter
 @Setter
@@ -25,10 +24,5 @@ public class RoomBooking {
     private Rooms room;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-    @Transient
-    private double price()
-    {
-        return ChronoUnit.DAYS.between(checkOutDate, checkInDate)* room.getPrice();
-    }
 
 }

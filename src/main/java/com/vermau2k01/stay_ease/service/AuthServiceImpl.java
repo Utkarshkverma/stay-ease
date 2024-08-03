@@ -20,7 +20,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class IAuthServiceImpl implements IAuthService {
+public class AuthServiceImpl implements IAuthService {
 
     private final UsersRepository userRepository;
     private final PasswordEncoder passwordEncoder;
