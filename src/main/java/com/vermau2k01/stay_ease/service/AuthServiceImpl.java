@@ -3,6 +3,7 @@ package com.vermau2k01.stay_ease.service;
 
 import com.vermau2k01.stay_ease.entity.Roles;
 import com.vermau2k01.stay_ease.entity.Users;
+import com.vermau2k01.stay_ease.exception.OperationNotPermittedException;
 import com.vermau2k01.stay_ease.repository.RolesRepository;
 import com.vermau2k01.stay_ease.repository.UsersRepository;
 import com.vermau2k01.stay_ease.request.AuthenticationRequest;
@@ -38,21 +39,21 @@ public class AuthServiceImpl implements IAuthService {
         {
             userRole = roleRepository.findByRole("ADMIN")
                     .orElseThrow(() ->
-                            new IllegalStateException("Role ADMIN was not initalized"));
+                            new OperationNotPermittedException("Role ADMIN was not initalized"));
         }
 
         else if(request.getEmail().endsWith("stayease.manager.in"))
         {
             userRole = roleRepository.findByRole("MANAGER")
                     .orElseThrow(() ->
-                            new IllegalStateException("Role MANAGER was not initialized"));
+                            new OperationNotPermittedException("Role MANAGER was not initialized"));
         }
 
         else {
 
             userRole = roleRepository.findByRole("USER")
                     .orElseThrow(() ->
-                            new IllegalStateException("Role USER was not initialized"));
+                            new OperationNotPermittedException("Role USER was not initialized"));
         }
 
         var user = Users

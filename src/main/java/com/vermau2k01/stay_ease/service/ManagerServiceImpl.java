@@ -1,6 +1,7 @@
 package com.vermau2k01.stay_ease.service;
 
 import com.vermau2k01.stay_ease.entity.*;
+import com.vermau2k01.stay_ease.exception.OperationNotPermittedException;
 import com.vermau2k01.stay_ease.repository.RolesRepository;
 import com.vermau2k01.stay_ease.repository.RoomBookingRepository;
 import com.vermau2k01.stay_ease.repository.RoomsRepository;
@@ -42,7 +43,7 @@ public class ManagerServiceImpl implements IManagerService{
             Users user = (Users) authentication.getPrincipal();
             Roles requiredRole = rolesRepository
                     .findByRole("MANAGER")
-                    .orElseThrow(() -> new RuntimeException("Role Not Found"));
+                    .orElseThrow(() -> new OperationNotPermittedException("Role Not Found"));
 
             for (Roles role : user.getRole()) {
                 logger.info("User Role: {}", role.getRole());
@@ -51,7 +52,7 @@ public class ManagerServiceImpl implements IManagerService{
 
             if (user.getRole() == null ||
                     user.getRole().stream().noneMatch(r -> r.getRole().equals(requiredRole.getRole()))) {
-                throw new RuntimeException("You are not allowed to access this room");
+                throw new OperationNotPermittedException("You are not allowed to access this room");
             }
 
             Rooms build = Rooms.builder()
@@ -78,7 +79,7 @@ public class ManagerServiceImpl implements IManagerService{
             Users user = (Users) connectedUser.getPrincipal();
             Roles requiredRole = rolesRepository
                     .findByRole("MANAGER")
-                    .orElseThrow(() -> new RuntimeException("Role Not Found"));
+                    .orElseThrow(() -> new OperationNotPermittedException("Role Not Found"));
 
             for (Roles role : user.getRole()) {
                 logger.info("User Role: {}", role.getRole());
@@ -87,13 +88,13 @@ public class ManagerServiceImpl implements IManagerService{
 
             if (user.getRole() == null ||
                     user.getRole().stream().noneMatch(r -> r.getRole().equals(requiredRole.getRole()))) {
-                throw new RuntimeException("You are not allowed to access this room");
+                throw new OperationNotPermittedException("You are not allowed to access this room");
             }
 
             List<RoomBooking> bookedRooms = roomBookingRepository
                     .findRoomBookingOfUser(checkInRequest.getEmailId(), LocalDate.now());
             if (bookedRooms.isEmpty()) {
-                throw new RuntimeException("User has not booked rooms for today");
+                throw new OperationNotPermittedException("User has not booked rooms for today");
             }
 
             for (RoomBooking roomBooking : bookedRooms) {
@@ -126,7 +127,7 @@ public class ManagerServiceImpl implements IManagerService{
             Users user = (Users) connectedUser.getPrincipal();
             Roles requiredRole = rolesRepository
                     .findByRole("MANAGER")
-                    .orElseThrow(() -> new RuntimeException("Role Not Found"));
+                    .orElseThrow(() -> new OperationNotPermittedException("Role Not Found"));
 
             for (Roles role : user.getRole()) {
                 logger.info("User Role: {}", role.getRole());
@@ -135,20 +136,20 @@ public class ManagerServiceImpl implements IManagerService{
 
             if (user.getRole() == null ||
                     user.getRole().stream().noneMatch(r -> r.getRole().equals(requiredRole.getRole()))) {
-                throw new RuntimeException("You are not allowed to access this room");
+                throw new OperationNotPermittedException("You are not allowed to access this room");
             }
 
             List<RoomBooking> bookedRooms = roomBookingRepository
                     .findRoomBookingOfUser(checkOutRequest.getEmailId(), LocalDate.now());
             if (bookedRooms.isEmpty()) {
-                throw new RuntimeException("User has not booked rooms for today");
+                throw new OperationNotPermittedException("User has not booked rooms for today");
             }
 
             List<RoomBooking> checkOutRoom = roomBookingRepository
                     .findCheckOutRoom(checkOutRequest.getEmailId(), LocalDate.now());
 
             if (checkOutRoom.isEmpty()) {
-                throw new RuntimeException("User has not booked rooms");
+                throw new OperationNotPermittedException("User has not booked rooms");
             }
 
             for(RoomBooking roomBooking : checkOutRoom){

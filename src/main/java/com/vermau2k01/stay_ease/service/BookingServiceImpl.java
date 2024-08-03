@@ -4,6 +4,7 @@ import com.vermau2k01.stay_ease.entity.Roles;
 import com.vermau2k01.stay_ease.entity.RoomBooking;
 import com.vermau2k01.stay_ease.entity.Rooms;
 import com.vermau2k01.stay_ease.entity.Users;
+import com.vermau2k01.stay_ease.exception.OperationNotPermittedException;
 import com.vermau2k01.stay_ease.repository.RolesRepository;
 import com.vermau2k01.stay_ease.repository.RoomBookingRepository;
 import com.vermau2k01.stay_ease.repository.RoomsRepository;
@@ -33,7 +34,7 @@ public class BookingServiceImpl implements IBookingService {
         Users users = (Users) authentication.getPrincipal();
         Roles requiredRole = rolesRepository
                 .findByRole("USER")
-                .orElseThrow(() -> new RuntimeException("Role Not Found"));
+                .orElseThrow(() -> new OperationNotPermittedException("Role Not Found"));
 
 
         for (Roles role : users.getRole()) {
@@ -43,7 +44,7 @@ public class BookingServiceImpl implements IBookingService {
 
         if (users.getRole() == null ||
                 users.getRole().stream().noneMatch(r -> r.getRole().equals(requiredRole.getRole()))) {
-            throw new RuntimeException("You are not allowed to access this room");
+            throw new OperationNotPermittedException("You are not allowed to access this room");
         }
         List<Rooms> allRooms = roomRepository.findAll();
         List<Rooms> nonAvailableRooms = roomBookingRepository
@@ -58,7 +59,7 @@ public class BookingServiceImpl implements IBookingService {
         Users users = (Users) connectedUser.getPrincipal();
         Roles requiredRole = rolesRepository
                 .findByRole("USER")
-                .orElseThrow(() -> new RuntimeException("Role Not Found"));
+                .orElseThrow(() -> new OperationNotPermittedException("Role Not Found"));
 
 
         for (Roles role : users.getRole()) {
@@ -68,10 +69,10 @@ public class BookingServiceImpl implements IBookingService {
 
         if (users.getRole() == null ||
                 users.getRole().stream().noneMatch(r -> r.getRole().equals(requiredRole.getRole()))) {
-            throw new RuntimeException("You are not allowed to access this room");
+            throw new OperationNotPermittedException("You are not allowed to access this room");
         }
         Rooms room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new RuntimeException("Room not found"));
+                .orElseThrow(() -> new OperationNotPermittedException("Room not found"));
 
         RoomBooking build = RoomBooking
                 .builder()
