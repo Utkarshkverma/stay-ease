@@ -19,7 +19,8 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtFilter extends OncePerRequestFilter {
+
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
@@ -31,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             ServletException, IOException {
 
         // It means that if the servlet path contains /api/v1/auth then we do not need to execute the filter
-        if(request.getServletPath().contains("/auth")) {
+        if(request.getServletPath().contains("/api/v1/auth")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -63,5 +64,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
 
     }
-
 }

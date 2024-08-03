@@ -11,14 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class RegistrationRequest {
+public class AuthenticationRequest {
 
-    @NotEmpty(message = "Firstname is mandatory")
-    @NotBlank(message = "Firstname is mandatory")
-    private String firstname;
-    @NotEmpty(message = "Lastname is mandatory")
-    @NotBlank(message = "Lastname is mandatory")
-    private String lastname;
     @NotEmpty(message = "Email is mandatory")
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Email is not well formatted")
@@ -27,4 +21,5 @@ public class RegistrationRequest {
     @NotBlank(message = "Password is mandatory")
     @Size(min = 8, message = "Password should be minimum 8 characters")
     private String password;
+
 }

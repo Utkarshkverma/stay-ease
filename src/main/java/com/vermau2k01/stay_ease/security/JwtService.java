@@ -4,28 +4,24 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-
 @Service
-@RequiredArgsConstructor
 public class JwtService {
 
     @Value("${application.security.jwt.secret-key}")
     private String SECRET_KEY;
-
     @Value("${application.security.jwt.expiration}")
-    private long JWT_EXPIRATION_TIME;
-
+    private Long JWT_EXPIRATION_TIME;
 
     /*
      *  todo Creating Jwt tokens
@@ -101,5 +97,4 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
     }
-
 }
