@@ -31,4 +31,13 @@ public interface RoomBookingRepository extends JpaRepository<RoomBooking, Intege
     List<RoomBooking> findRoomBookingOfUser(@Param("email") String email,
                                             @Param("currentDate") LocalDate
                                                         currentDate);
+
+    @Query("""
+       SELECT rb FROM RoomBooking rb
+            WHERE rb.user.email = :email
+            AND :currentDate >= rb.checkInDate
+""")
+    List<RoomBooking> findCheckOutRoom(@Param("email") String email,
+    @Param("currentDate") LocalDate
+            currentDate);
 }
