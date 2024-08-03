@@ -15,5 +15,5 @@ public class Rooms {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
-    private double price;
+    private int price;
 }
