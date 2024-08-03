@@ -1,10 +1,7 @@
 package com.vermau2k01.stay_ease.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -14,6 +11,7 @@ import java.time.temporal.ChronoUnit;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class RoomBooking {
 
     @Id
