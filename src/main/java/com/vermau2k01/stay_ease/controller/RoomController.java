@@ -30,7 +30,8 @@ public class RoomController {
     @PostMapping("/manager/check-in-user")
     public ResponseEntity<List<CheckInResponse>> checkInUser(@RequestBody @Valid CheckInRequest rooms,
                                              Authentication authentication) {
-        List<CheckInResponse> checkInResponses = managerService.checkIn(rooms, authentication);
+        List<CheckInResponse> checkInResponses = managerService
+                .checkIn(rooms, authentication);
         return ResponseEntity.ok(checkInResponses);
     }
 }

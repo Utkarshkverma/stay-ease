@@ -97,6 +97,7 @@ public class ManagerServiceImpl implements IManagerService{
                 roomBooking.setCheckInDate(LocalDate.now());
                 CheckInResponse build = CheckInResponse.builder()
                         .email(checkInRequest.getEmailId())
+                        .roomNo(roomBooking.getRoom().getId())
                         .bookingFromDate(roomBooking.getBookingFrom())
                         .bookingToDate(roomBooking.getBookingTo())
                         .checkInDate(LocalDate.now())
